@@ -77,6 +77,8 @@ class Forecast
         $this->data = json_decode( json_encode($this->data) );
         $this->data->source = $this->data->{'@attributes'}->source;
         $this->data->productioncenter = $this->data->{'@attributes'}->productioncenter;
+        $this->data->forecast->domain = $this->data->forecast->{'@attributes'}->domain;
+        unset($this->data->forecast->{'@attributes'});
         unset($this->data->{'@attributes'});
 
         foreach( $this->data->forecast->area as $area ){
