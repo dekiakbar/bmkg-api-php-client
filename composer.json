@@ -1,0 +1,22 @@
+{
+    "name": "dekiakbar/bmkg-api-php-client",
+    "description": "php api client for https://data.bmkg.go.id/",
+    "type": "library",
+    "require": {
+        "php": ">=5.5",
+        "ext-SimpleXML": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Deki Akbar",
+            "email": "dekiakbar@linuxmail.org"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Dekiakbar\\BmkgApiPhpClient\\": "src/"
+        }
+    }
+}
