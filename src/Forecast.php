@@ -83,42 +83,72 @@ class Forecast
 
         foreach( $this->data->forecast->area as $area ){
             $area->id = $area->{'@attributes'}->id;
-            $area->latitu = $area->{'@attributes'}->latitude;
+            $area->latitude = $area->{'@attributes'}->latitude;
             $area->longitude  = $area->{'@attributes'}->longitude;
             $area->coordinate = $area->{'@attributes'}->coordinate;
-            $area->ty = $area->{'@attributes'}->type;
+            $area->type = $area->{'@attributes'}->type;
             $area->region = $area->{'@attributes'}->region;
             $area->level  = $area->{'@attributes'}->level;
             $area->descriptio = $area->{'@attributes'}->description;
             $area->domain = $area->{'@attributes'}->domain;
             $area->tags = $area->{'@attributes'}->tags;
+            $area->name = (object)array('en_us' => $area->name[0],'id_id' => $area->name[1]);
             unset( $area->{'@attributes'} );
 
-            foreach( $area->parameter as $param ){
-                $param->id = $param->{'@attributes'}->id;
-                $param->description = $param->{'@attributes'}->description;
-                $param->type = $param->{'@attributes'}->type;
-
-                unset($param->{'@attributes'});
-
-                foreach( $param->timerange as $timerange ){
-                    
-                    if( $timerange->{'@attributes'}->type == 'hourly' ){
-                        $timerange->type = $timerange->{'@attributes'}->type;
-                        $timerange->h = $timerange->{'@attributes'}->h;
-                        $timerange->datetime = $timerange->{'@attributes'}->datetime;
-
-                        unset( $timerange->{'@attributes'} );
-                    }elseif( $timerange->{'@attributes'}->type == 'daily' ){
-                        $timerange->type = $timerange->{'@attributes'}->type;
-                        $timerange->day = $timerange->{'@attributes'}->day;
-                        $timerange->datetime = $timerange->{'@attributes'}->datetime;
-
-                        unset( $timerange->{'@attributes'} );
+            if( property_exists($area, 'parameter') ){
+                foreach( $area->parameter as $param ){
+                    $param->id = $param->{'@attributes'}->id;
+                    $param->description = $param->{'@attributes'}->description;
+                    $param->type = $param->{'@attributes'}->type;
+    
+                    unset($param->{'@attributes'});
+    
+                    foreach( $param->timerange as $timerange ){
+                        
+                        if( $timerange->{'@attributes'}->type == 'hourly' ){
+                            $timerange->type = $timerange->{'@attributes'}->type;
+                            $timerange->h = $timerange->{'@attributes'}->h;
+                            $timerange->datetime = $timerange->{'@attributes'}->datetime;
+    
+                            unset( $timerange->{'@attributes'} );
+                        }elseif( $timerange->{'@attributes'}->type == 'daily' ){
+                            $timerange->type = $timerange->{'@attributes'}->type;
+                            $timerange->day = $timerange->{'@attributes'}->day;
+                            $timerange->datetime = $timerange->{'@attributes'}->datetime;
+    
+                            unset( $timerange->{'@attributes'} );
+                        }
                     }
                 }
             }
         }
+        return $this;
+    }
+
+    public function getCityList($lang=null){
+        $this->data = array_map(function($data) use($lang){
+            if(is_object($data)){
+                if( strtolower($lang) == 'en_us'){
+                    $data->name->id = $data->id;
+                    $data->name->name = $data->name->en_us;
+                    unset($data->name->en_us);
+                    unset($data->name->id_id);
+                    return $data->name;
+                }elseif(strtolower($lang) == 'id_id'){
+                    $data->name->id = $data->id;
+                    $data->name->name = $data->name->id_id;
+                    unset($data->name->en_us);
+                    unset($data->name->id_id);
+                    return $data->name;
+                }else{
+                    $data->name->id = $data->id;
+                    return $data->name;
+                }
+            }else{
+                return $data['name'];
+            }
+            
+        }, $this->data->forecast->area);
         return $this;
     }
 }
