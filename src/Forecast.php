@@ -129,26 +129,43 @@ class Forecast
         $this->data = array_map(function($data) use($lang){
             if(is_object($data)){
                 if( strtolower($lang) == 'en_us'){
-                    $data->name->id = $data->id;
                     $data->name->name = $data->name->en_us;
                     unset($data->name->en_us);
                     unset($data->name->id_id);
-                    return $data->name;
+                    unset( $data->parameter );
+                    return $data;
                 }elseif(strtolower($lang) == 'id_id'){
-                    $data->name->id = $data->id;
                     $data->name->name = $data->name->id_id;
                     unset($data->name->en_us);
                     unset($data->name->id_id);
-                    return $data->name;
+                    unset( $data->parameter );
+                    return $data;
                 }else{
-                    $data->name->id = $data->id;
-                    return $data->name;
+                    unset( $data->parameter );
+                    return $data;
                 }
             }else{
-                return $data['name'];
+                throw new \Exception("The data is not Object");
             }
             
         }, $this->data->forecast->area);
+        return $this;
+    }
+
+    public function getDataByCityId($id=null){
+        if( property_exists($this->data,'forecast') && property_exists($this->data->forecast,'area') ){
+            $this->data = array_values(
+                array_filter( 
+                    array_map(function($data) use($id){
+                        if( $data->id == $id ){
+                            return $data;
+                        }
+                    }, $this->data->forecast->area) 
+                ) 
+            )[0];
+        }else{
+            return $this;
+        }
         return $this;
     }
 }
