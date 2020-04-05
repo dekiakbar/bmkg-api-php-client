@@ -29,12 +29,40 @@ And you're done, enjoy it :)
 ### Example Usage
 
 #### Forecast
-* coming soon
-
+* Get all forecast data by province, this method will return all city data including Temperature,Humidity,Wind Speed,Wind Direction and Weather, this method will return data type : **stdclass object**, if you did not passing any parameter to **execute()** method then it will return data for all province.  
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+use Dekiakbar\BmkgApiPhpClient\Forecast;
+$data = new Forecast();
+//this will return data only from  West java province
+print_r($data->execute('JawaBarat')->getData());
+//this will return data from all provinces
+print_r($data->execute()->getData());
+```
+* Get city list
+```php
+//this will return available city list from West java province
+print_r($data->execute('JawaBarat')->getCityList()->getData());
+```
+* Get data for specific city
+```php
+//this will return data only for spesific city
+print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getData());
+//this will return data for all city, coz there is no parameter passed to the function
+print_r($data->execute('JawaBarat')->getDataByCityId()->getData());
+```
+* Get data list
+```php
+//this will return available data id from specific city
+print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getDataList()->getData());
+```
+* Get specific data by Id, the data id can not be null, use **getDataList()** to get available data id.
+```php
+//this will return specific data from specific city
+print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getDataById('hu')->getData());
+```
 #### Earthquake 
 * coming soon
-
-### Break down into end to end tests
 
 ## Built With
 
@@ -44,7 +72,7 @@ And you're done, enjoy it :)
 
 ## Contributing
 
-Please fork this repository, and create new pull request if you want to contribute on this project.
+Please fork this repository, and create new pull request if you want to contribute on this project.or open a new issue if you find something wrong with this project.
 
 ## Authors
 

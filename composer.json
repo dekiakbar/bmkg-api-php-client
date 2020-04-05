@@ -7,6 +7,8 @@
         "ext-SimpleXML": "*"
     },
     "license": "MIT",
+    "keywords": ["bmkg", "api", "php"],
+    "homepage": "https://github.com/dekiakbar/bmkg-api-php-client",
     "authors": [
         {
             "name": "Deki Akbar",

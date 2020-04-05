@@ -220,15 +220,17 @@ class Forecast
 
     public function getDataByCityId($id=null){
         if( property_exists($this->data,'forecast') && property_exists($this->data->forecast,'area') ){
-            $this->data = array_values(
-                array_filter( 
-                    array_map(function($data) use($id){
-                        if( $data->id == $id ){
-                            return $data;
-                        }
-                    }, $this->data->forecast->area) 
-                ) 
-            )[0];
+            if( !empty($id) || !is_null($id)){
+                $this->data = array_values(
+                    array_filter( 
+                        array_map(function($data) use($id){
+                            if( $data->id == $id ){
+                                return $data;
+                            }
+                        }, $this->data->forecast->area) 
+                    ) 
+                )[0];
+            }
         }else{
             return $this;
         }
