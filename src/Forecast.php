@@ -43,6 +43,51 @@ class Forecast
         'Indonesia' => 'DigitalForecast-Indonesia.xml'
     );
 
+    const WEATHER_CODE_MAPPINGS = array(
+        "en_us" => array(
+            0 => "Clear Skies",
+            100 => "Clear Skies",
+            1 => "Partly Cloudy",
+            101 => "Partly Cloudy",
+            2 => "Partly Cloudy",
+            102 => "Partly Cloudy",
+            3 => "Mostly Cloudy",
+            103 => "Mostly Cloudy",
+            4 => "Overcast",
+            104 => "Overcast",
+            5 => "Haze",
+            10 => "Smoke",
+            45 => "Fog",
+            60 => "Light Rain",
+            61 => "Rain",
+            63 => "Heavy Rain",
+            80 => "Isolated Shower",
+            95 => "Severe Thunderstorm",
+            97 => "Severe Thunderstorm"
+        ),
+        'id_id' => array(
+            0 => "Cerah",
+            100 => "Cerah",
+            1 => "Cerah Berawan",
+            101 => "Cerah Berawan",
+            2 => "Cerah Berawan",
+            102 => "Cerah Berawan",
+            3 => "Berawan",
+            103 => "Berawan",
+            4 => "Berawan Tebal",
+            104 => "Berawan Tebal",
+            5 => "Udara Kabur",
+            10 => "Asap",
+            45 => "Kabut",
+            60 => "Hujan Ringan",
+            61 => "Hujan Sedang",
+            63 => "Hujan Lebat",
+            80 => "Hujan Lokal",
+            95 => "Hujan Petir",
+            97 => "Hujan Petir"
+        )
+    );
+
     public $data;
 
     public function execute($area=null){
@@ -102,7 +147,6 @@ class Forecast
                     $param->type = $param->{'@attributes'}->type;
     
                     unset($param->{'@attributes'});
-    
                     foreach( $param->timerange as $timerange ){
                         
                         if( $timerange->{'@attributes'}->type == 'hourly' ){
@@ -117,6 +161,28 @@ class Forecast
                             $timerange->datetime = $timerange->{'@attributes'}->datetime;
     
                             unset( $timerange->{'@attributes'} );
+                        }
+
+                        if( $param->id == 't' || $param->id == 'tmin' || $param->id == 'tmax'){
+                            $timerange->value = (object)array('c' => $timerange->value[0],'f' => $timerange->value[1]);
+                        }elseif( $param->id == 'wd' ){
+                            $timerange->value = (object)array(
+                                'deg' => $timerange->value[0],
+                                'card' => $timerange->value[1],
+                                'sexa' => $timerange->value[2]
+                            );
+                        }elseif( $param->id == 'weather' ){
+                            $timerange->description = (object)array(
+                                'en_us' => SELF::WEATHER_CODE_MAPPINGS['en_us'][$timerange->value],
+                                'id_id' => SELF::WEATHER_CODE_MAPPINGS['id_id'][$timerange->value],
+                            );
+                        }elseif( $param->id == 'ws' ){
+                            $timerange->value = (object)array(
+                                'knot' => $timerange->value[0],
+                                'mph' => $timerange->value[1],
+                                'kph' => $timerange->value[2],
+                                'ms' => $timerange->value[3],
+                            );
                         }
                     }
                 }
