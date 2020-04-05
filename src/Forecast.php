@@ -179,16 +179,22 @@ class Forecast
         return $this;
     }
 
-    public function getDataById($id){
-        $this->data = array_values(
-            array_filter(
-                array_map(function($data) use($id){
-                    if( $data->id == $id ){
-                        return $data;
-                    }
-                },$this->data->parameter)
-            )
-        )[0];
+    public function getDataById($id=null){
+        $this->data =array_filter(
+            array_map(function($data) use($id){
+                if( $data->id == $id ){
+                    return $data;
+                }elseif( empty($id) || is_null($id) ){
+                    throw new \Exception("Data id can not be null");
+                }
+            },$this->data->parameter)
+        );
+        $this->data = array_values( $this->data );
+        if( count($this->data) > 0 ){
+           $this->data = $this->data[0];
+        }else{
+            throw new \Exception("Can not find data id :".$id);
+        }
         return $this;
     }
 }
