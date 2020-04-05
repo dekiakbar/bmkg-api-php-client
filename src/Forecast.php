@@ -168,4 +168,27 @@ class Forecast
         }
         return $this;
     }
+
+    public function getDataList(){
+        $this->data = array_map(function($data){
+            if( property_exists($data,'id') ){
+                unset( $data->timerange );
+                return $data;
+            }
+        },$this->data->parameter);
+        return $this;
+    }
+
+    public function getDataById($id){
+        $this->data = array_values(
+            array_filter(
+                array_map(function($data) use($id){
+                    if( $data->id == $id ){
+                        return $data;
+                    }
+                },$this->data->parameter)
+            )
+        )[0];
+        return $this;
+    }
 }
