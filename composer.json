@@ -16,7 +16,7 @@
             "email": "dekiakbar@linuxmail.org"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Dekiakbar\\BmkgApiPhpClient\\": "src/"
