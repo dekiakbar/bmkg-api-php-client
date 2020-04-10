@@ -1,6 +1,7 @@
 {
     "name": "dekiakbar/bmkg-api-php-client",
     "description": "php api client for https://data.bmkg.go.id/",
+    "version": "1.0.0",
     "type": "library",
     "require": {
         "php": ">=5.5",
