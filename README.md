@@ -2,6 +2,10 @@
 
 This Project is used for scrapping data from https://data.bmkg.go.id/
 
+## Warning
+### **It is mandatory to list BMKG (Meteorology, Climatology and Geophysics Agency) as data sources and display them on your application or system.**
+***
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -39,11 +43,20 @@ print_r($data->execute('JawaBarat')->getData());
 //this will return data from all provinces
 print_r($data->execute()->getData());
 ```
+
+* Get available area code
+```php
+//this will retun available area code, you can pass this area code to execute method
+//this will return array
+print_r($data->getAreaList());
+```
+
 * Get city list
 ```php
 //this will return available city list from West java province
 print_r($data->execute('JawaBarat')->getCityList()->getData());
 ```
+
 * Get data for specific city
 ```php
 //this will return data only for spesific city
@@ -51,18 +64,41 @@ print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getData());
 //this will return data for all city, coz there is no parameter passed to the function
 print_r($data->execute('JawaBarat')->getDataByCityId()->getData());
 ```
+
 * Get data list
 ```php
 //this will return available data id from specific city
 print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getDataList()->getData());
 ```
+
 * Get specific data by Id, the data id can not be null, use **getDataList()** to get available data id.
 ```php
 //this will return specific data from specific city
 print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getDataById('hu')->getData());
 ```
+
 #### Earthquake 
-* coming soon
+* Get earthquake data from bmkg open data, this method will return data type : **stdclass object**, if you did not passing any parameter to **execute()** method then it will return data as same as **autogempa** code.
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+use Dekiakbar\BmkgApiPhpClient\Earthquake;
+
+// Earthquake class initialization
+$data = new Earthquake();
+
+// This will method will get data from bmkg, then will fetch the data and return as StdClass onject
+// if there is no parameter passed to the excute method then it will return defsult data (autogempa)
+print_r( $data->execute()->getData() );
+
+// With parameter example
+print_r( $data->execute('lasttsunami')->getData() );
+```
+
+* Get available code list
+```php
+// This will return available code list for execute method
+print_r( $data->getCodeList() );
+```
 
 ## Built With
 

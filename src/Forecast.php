@@ -90,6 +90,11 @@ class Forecast
 
     public $data;
 
+    public function getAreaList(){
+        $this->data = array_keys(SELF::PREFIX_URL);
+        return $this->data;
+    }
+
     public function execute($area=null){
         if( $area != null){
             if( array_key_exists($area, SELF::PREFIX_URL) ){
