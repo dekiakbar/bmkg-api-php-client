@@ -68,7 +68,8 @@ class ForecastTest extends TestCase
 
     public function testExecute()
     {
-        foreach( $this->forecast->getAreaList() as $areaList ){
+        $areas = ['Aceh','Bali','BangkaBelitung'];
+        foreach( $areas as $areaList ){
             $data = $this->forecast->execute($areaList);
             $this->assertIsObject($data);
             $this->assertIsObject($data->data);
@@ -104,7 +105,8 @@ class ForecastTest extends TestCase
 
     public function testGetCityList()
     {
-        foreach( $this->forecast->getAreaList() as $areaList ){
+        $areas = ['SulawesiBarat','SulawesiSelatan','SulawesiTengah'];
+        foreach( $areas as $areaList ){
             $datas = $this->forecast->execute($areaList)->getCityList()->getData();
             $this->assertIsArray($datas);
             foreach($datas as $data){
@@ -123,7 +125,8 @@ class ForecastTest extends TestCase
 
     public function testGetDataByCityId()
     {
-        foreach( $this->forecast->getAreaList() as $areaList ){
+        $areas = ['Lampung'];
+        foreach( $areas as $areaList ){
             $datas = $this->forecast->execute($areaList)->getCityList()->getData();
             $this->assertIsArray($datas);
             foreach($datas as $data){
