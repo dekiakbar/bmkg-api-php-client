@@ -10,7 +10,6 @@ class Earthquake
         "gempaterkini" => "gempaterkini.xml",
         "gempadirasakan" => "gempadirasakan.xml",
         "lasttsunami" => "lasttsunami.xml",
-        "eqmap" => "eqmap.gif",
         "en_autogempa" => "en_autogempa.xml",
         "en_gempaterkini" => "en_gempaterkini.xml"
     );

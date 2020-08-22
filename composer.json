@@ -1,10 +1,10 @@
 {
     "name": "dekiakbar/bmkg-api-php-client",
     "description": "php api client for https://data.bmkg.go.id/",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "library",
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.2",
         "ext-SimpleXML": "*"
     },
     "license": "MIT",
@@ -21,5 +21,8 @@
         "psr-4": {
             "Dekiakbar\\BmkgApiPhpClient\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "8.0"
     }
 }

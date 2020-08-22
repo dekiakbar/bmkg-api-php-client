@@ -1,6 +1,12 @@
 # BMKG API PHP Client
 
-This Project is used for scrapping data from https://data.bmkg.go.id/
+<p align="center">
+    <a href="https://travis-ci.com/github/dekiakbar/bmkg-api-php-client"><img src="https://travis-ci.com/dekiakbar/bmkg-api-php-client.svg?branch=master"></a>
+    <a href="https://packagist.org/packages/dekiakbar/bmkg-api-php-client"><img src="https://poser.pugx.org/dekiakbar/bmkg-api-php-client/v"></a>
+    <a href="https://github.com/dekiakbar/bmkg-api-php-client/blob/master/LICENSE"><img src="https://poser.pugx.org/dekiakbar/bmkg-api-php-client/license"></a>
+</p>
+
+> This Project is used for scrapping data from https://data.bmkg.go.id/
 
 ## Warning
 ### **It is mandatory to list BMKG (Meteorology, Climatology and Geophysics Agency) as data sources and display them on your application or system.**
@@ -118,4 +124,4 @@ See also the list of [contributors](https://github.com/dekiakbar/bmkg-api-php-cl
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+<a href="https://github.com/dekiakbar/bmkg-api-php-client/blob/master/LICENSE"><img src="https://poser.pugx.org/dekiakbar/bmkg-api-php-client/license"></a>
