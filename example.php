@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Dekiakbar\BmkgApiPhpClient\Forecast;
+
+require_once __DIR__.'/vendor/autoload.php';
 use Dekiakbar\BmkgApiPhpClient\Earthquake;
+use Dekiakbar\BmkgApiPhpClient\Forecast;
 
 // $data = new Forecast();
 
@@ -29,7 +30,6 @@ use Dekiakbar\BmkgApiPhpClient\Earthquake;
 
 //this will return specific data from specific city
 // print_r($data->execute('JawaBarat')->getDataByCityId('501212')->getDataById('hu')->getData());
-
 
 // Earthquake
 // $data = new Earthquake();

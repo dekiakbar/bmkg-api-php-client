@@ -1,10 +1,11 @@
 <?php
+
 namespace Dekiakbar\BmkgApiPhpClient\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Dekiakbar\BmkgApiPhpClient\Earthquake;
+use PHPUnit\Framework\TestCase;
 
-class EarthquakeTest extends TestCase 
+class EarthquakeTest extends TestCase
 {
     private $earthquake;
 
@@ -15,14 +16,14 @@ class EarthquakeTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->earthquake = NULL;
+        $this->earthquake = null;
     }
 
     public function testGetCodeList()
     {
         $datas = $this->earthquake->getCodeList();
         $this->assertIsArray($datas);
-        foreach( $datas as $data ){
+        foreach ($datas as $data) {
             $this->assertNotNull($data);
         }
     }
@@ -51,7 +52,7 @@ class EarthquakeTest extends TestCase
     public function testAllData()
     {
         $lists = $this->earthquake->getCodeList();
-        foreach($lists as $list){
+        foreach ($lists as $list) {
             $datas = $this->earthquake->execute($list);
             $this->assertIsObject($datas);
         }

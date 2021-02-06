@@ -1,10 +1,11 @@
 <?php
+
 namespace Dekiakbar\BmkgApiPhpClient\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Dekiakbar\BmkgApiPhpClient\Forecast;
+use PHPUnit\Framework\TestCase;
 
-class ForecastTest extends TestCase 
+class ForecastTest extends TestCase
 {
     private $forecast;
 
@@ -43,7 +44,7 @@ class ForecastTest extends TestCase
         'SumateraBarat',
         'SumateraSelatan',
         'SumateraUtara',
-        'Indonesia'
+        'Indonesia',
     ];
 
     protected function setUp(): void
@@ -53,7 +54,7 @@ class ForecastTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->forecast = NULL;
+        $this->forecast = null;
     }
 
     public function testGetAreaList()
@@ -61,22 +62,22 @@ class ForecastTest extends TestCase
         $data = $this->forecast->getAreaList();
         $this->assertIsArray($data);
         $this->assertCount(35, $data);
-        foreach($data as $i => $d){
+        foreach ($data as $i => $d) {
             $this->assertStringContainsString($this->areaList[$i], $data[$i]);
         }
     }
 
     public function testExecute()
     {
-        $areas = ['Aceh','Bali','BangkaBelitung'];
-        foreach( $areas as $areaList ){
+        $areas = ['Aceh', 'Bali', 'BangkaBelitung'];
+        foreach ($areas as $areaList) {
             $data = $this->forecast->execute($areaList);
             $this->assertIsObject($data);
             $this->assertIsObject($data->data);
             $this->assertIsObject($data->data->forecast);
             $this->assertIsObject($data->data->forecast->issue);
             $this->assertIsArray($data->data->forecast->area);
-            foreach($data->data->forecast->area as $area){
+            foreach ($data->data->forecast->area as $area) {
                 $this->assertIsObject($area);
                 $this->assertIsObject($area->name);
                 $this->assertNotNull($area->id);
@@ -87,12 +88,12 @@ class ForecastTest extends TestCase
                 $this->assertNotNull($area->level);
                 $this->assertNotNull($area->descriptio);
                 $this->assertNotNull($area->domain);
-                if( property_exists($area, 'parameter') ){
+                if (property_exists($area, 'parameter')) {
                     $this->assertIsArray($area->parameter);
-                    foreach($area->parameter as $param){
+                    foreach ($area->parameter as $param) {
                         $this->assertIsObject($param);
                         $this->assertIsArray($param->timerange);
-                        foreach($param->timerange as $time){
+                        foreach ($param->timerange as $time) {
                             $this->assertNotNull($time->value);
                             $this->assertNotNull($time->type);
                             $this->assertNotNull($time->datetime);
@@ -105,11 +106,11 @@ class ForecastTest extends TestCase
 
     public function testGetCityList()
     {
-        $areas = ['SulawesiBarat','SulawesiSelatan','SulawesiTengah'];
-        foreach( $areas as $areaList ){
+        $areas = ['SulawesiBarat', 'SulawesiSelatan', 'SulawesiTengah'];
+        foreach ($areas as $areaList) {
             $datas = $this->forecast->execute($areaList)->getCityList()->getData();
             $this->assertIsArray($datas);
-            foreach($datas as $data){
+            foreach ($datas as $data) {
                 $this->assertIsObject($data->name);
                 $this->assertNotNull($data->id);
                 $this->assertNotNull($data->latitude);
@@ -126,26 +127,26 @@ class ForecastTest extends TestCase
     public function testGetDataByCityId()
     {
         $areas = ['Lampung'];
-        foreach( $areas as $areaList ){
+        foreach ($areas as $areaList) {
             $datas = $this->forecast->execute($areaList)->getCityList()->getData();
             $this->assertIsArray($datas);
-            foreach($datas as $data){
+            foreach ($datas as $data) {
                 $newDatas = $this->forecast->execute($areaList)->getDataByCityId($data->id)->getData();
                 $this->assertIsObject($newDatas);
                 $this->assertIsObject($newDatas->name);
-                if( property_exists($newDatas, 'parameter') ){
+                if (property_exists($newDatas, 'parameter')) {
                     $this->assertIsArray($newDatas->parameter);
-                    foreach( $newDatas->parameter as $param ){
+                    foreach ($newDatas->parameter as $param) {
                         $this->assertIsObject($param);
-                        foreach( $param->timerange as $time){
+                        foreach ($param->timerange as $time) {
                             $this->assertNotNull($time->value);
                             $this->assertNotNull($time->type);
-                            if( property_exists($time, 'h') ){
+                            if (property_exists($time, 'h')) {
                                 $this->assertNotNull($time->h);
-                            }elseif( property_exists($time, 'day') ){
+                            } elseif (property_exists($time, 'day')) {
                                 $this->assertNotNull($time->day);
                             }
-                            
+
                             $this->assertNotNull($time->datetime);
                         }
                     }
@@ -158,7 +159,7 @@ class ForecastTest extends TestCase
     {
         $datas = $this->forecast->execute('JawaBarat')->getDataByCityId('501212')->getDataList()->getData();
         $this->assertIsArray($datas);
-        foreach($datas as $data){
+        foreach ($datas as $data) {
             $this->assertNotNull($data->id);
             $this->assertNotNull($data->description);
             $this->assertNotNull($data->type);
@@ -173,7 +174,7 @@ class ForecastTest extends TestCase
         $this->assertNotNull($datas->timerange);
         $this->assertNotNull($datas->description);
         $this->assertNotNull($datas->type);
-        foreach( $datas->timerange as $time ){
+        foreach ($datas->timerange as $time) {
             $this->assertNotNull($time->value);
             $this->assertNotNull($time->type);
             $this->assertNotNull($time->h);
